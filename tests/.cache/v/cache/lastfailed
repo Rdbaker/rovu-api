@@ -1,0 +1,9 @@
+{
+  "test_models.py::TestUser::()::test_check_password": true,
+  "test_models.py::TestUser::()::test_created_at_defaults_to_datetime": true,
+  "test_models.py::TestUser::()::test_factory": true,
+  "test_models.py::TestUser::()::test_full_name": true,
+  "test_models.py::TestUser::()::test_get_by_id": true,
+  "test_models.py::TestUser::()::test_password_is_nullable": true,
+  "test_models.py::TestUser::()::test_roles": true
+}

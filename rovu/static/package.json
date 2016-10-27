@@ -1,0 +1,11 @@
+{
+  "name": "rovu",
+  "version": "1.0.0",
+  "description": "A flask API cookiecutter",
+  "main": "index.js",
+  "author": "Ryan Baker",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap-sass": "^3.3.6"
+  }
+}
