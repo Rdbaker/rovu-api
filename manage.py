@@ -2,12 +2,9 @@
 # -*- coding: utf-8 -*-
 """Management script."""
 import os
-from glob import glob
-from subprocess import call
 
-from flask.ext.sqlalchemy import sqlalchemy
 from flask_migrate import Migrate, MigrateCommand
-from flask_script import Command, Manager, Option, Server, Shell
+from flask_script import Manager, Server, Shell
 from flask_script.commands import Clean, ShowUrls
 
 from rovu.app import create_app
@@ -27,7 +24,7 @@ migrate = Migrate(app, db)
 
 
 def _make_context():
-    """Return context dict for a shell session so you can access app, db, and models by default."""
+    """Return context dict for a shell session."""
     return {'app': app, 'db': db, 'models': models}
 
 
@@ -37,6 +34,13 @@ def test():
     import pytest
     exit_code = pytest.main([TEST_PATH, '--verbose'])
     return exit_code
+
+
+@manager.command
+def ingest():
+    """Ingest events data from eventbrite."""
+    from rovu.ingest.eventbrite import extract_events
+    extract_events()
 
 
 manager.add_command('server', Server())

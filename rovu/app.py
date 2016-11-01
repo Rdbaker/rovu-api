@@ -6,6 +6,7 @@ from rovu import public
 from rovu.extensions import bcrypt, cache, db, debug_toolbar, login_manager, migrate
 from rovu.settings import ProdConfig
 from rovu.api.v1 import users
+from rovu.api.v1 import events
 
 
 def create_app(config_object=ProdConfig):
@@ -35,4 +36,5 @@ def register_blueprints(app):
     """Register Flask blueprints."""
     app.register_blueprint(public.views.blueprint)
     app.register_blueprint(users.views.blueprint)
+    app.register_blueprint(events.views.blueprint)
     return None

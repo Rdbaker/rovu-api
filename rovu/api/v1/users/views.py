@@ -11,14 +11,14 @@ USER_SCHEMA = UserSchema()
 
 
 
-@blueprint.route('/')
+@blueprint.route('/', strict_slashes=False)
 @login_required
 def users():
     """List members."""
     return USER_SCHEMA.dumps(User.query.all(), many=True).data
 
 
-@blueprint.route('/me')
+@blueprint.route('/me', strict_slashes=False)
 @login_required
 def me():
     """List members."""
