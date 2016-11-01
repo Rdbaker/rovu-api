@@ -27,4 +27,4 @@ def events():
         query_args.append(Event.end_datetime <= period_end)
 
     return EVENT_SCHEMA.dumps(Event.query.filter(*query_args).all(),
-                              many=True).data
+                              many=True)
