@@ -49,3 +49,6 @@ env/
 node_modules
 
 .ropeproject
+
+# my API keys
+.keys.yml

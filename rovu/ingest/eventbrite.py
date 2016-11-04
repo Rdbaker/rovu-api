@@ -26,7 +26,7 @@ def get_auth_header():
     return {'Authorization': 'Bearer {}'.format(eb_key)}
 
 
-def get_cambridge_events(page=1):
+def get_cambridge_events(page=41):
     """Get the initial events in the cambridge area."""
     return requests.get(EB_EVENT_URL, params={'location.within': RADIUS,
                                               'location.latitude': LATITUDE,
@@ -38,9 +38,9 @@ def get_cambridge_events(page=1):
 def extract_events():
     """Get the Eventbrite events within RADIUS of LAT:LON."""
     response = get_cambridge_events()
-    logging.info('processing page 1')
+    logging.info('processing page 41')
     extract_page_events(response.json()['events'])
-    for page in range(response.json()['pagination']['page_number']+1,
+    for page in range(42,#response.json()['pagination']['page_number']+1,
                       response.json()['pagination']['page_count']+1):
         logging.info('processing page {}'.format(page))
         json_response = get_cambridge_events(page).json()
@@ -63,6 +63,10 @@ def extract_event(event):
 
 def create_event(event_dict):
     """Initialize an event model."""
+    event = Event.query.filter(Event.eb_id == event_dict.get('id')).first()
+    # make sure we're not storing a duplicate
+    if event is not None:
+        return event
     event = Event(
         eb_name_html=event_dict.get('name', {}).get('html', ''),
         eb_description_html=event_dict.get('description', {}).get('html', ''),

@@ -15,16 +15,16 @@ EVENT_SCHEMA = EventSchema()
 @blueprint.route('/', strict_slashes=False)
 def events():
     """List events."""
-    period_start = request.args.get('period_start', None)
-    period_end = request.args.get('period_end', None)
+    event_start_after = request.args.get('event_start_after', None)
+    event_end_before = request.args.get('event_end_before', None)
 
-    if period_start is None:
+    if event_start_after is None:
         query_args = [Event.start_datetime >= datetime.utcnow().isoformat()]
     else:
-        query_args = [Event.start_datetime >= parse(period_start)]
+        query_args = [Event.start_datetime >= parse(event_start_after)]
 
-    if period_end is not None:
-        query_args.append(Event.end_datetime <= period_end)
+    if event_end_before is not None:
+        query_args.append(Event.end_datetime <= event_end_before)
 
     return EVENT_SCHEMA.dumps(Event.query.filter(*query_args).all(),
                               many=True)
