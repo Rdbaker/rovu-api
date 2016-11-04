@@ -17,8 +17,16 @@ EB_HOST = 'https://www.eventbriteapi.com/v3'
 EB_EVENT_URL = '{}/events/search'.format(EB_HOST)
 EB_VENUE_URL = '{}/venues'.format(EB_HOST)
 RADIUS = '5mi'
-LATITUDE = '42.360967'
-LONGITUDE = '-71.082025'
+COORDS = {
+    'cambridge': {
+        'latitude': '42.360967',
+        'longitude': '-71.082025'
+    },
+    'worcester': {
+        'latitude': '42.277613952716145',
+        'longitude': '-71.80649595832824'
+    },
+}
 
 
 def get_auth_header():
@@ -26,21 +34,23 @@ def get_auth_header():
     return {'Authorization': 'Bearer {}'.format(eb_key)}
 
 
-def get_cambridge_events(page=41):
+def get_cambridge_events(page=1):
     """Get the initial events in the cambridge area."""
-    return requests.get(EB_EVENT_URL, params={'location.within': RADIUS,
-                                              'location.latitude': LATITUDE,
-                                              'location.longitude': LONGITUDE,
-                                              'page': page},
-                        headers=get_auth_header())
+    return requests.get(
+        EB_EVENT_URL,
+        params={'location.within': RADIUS,
+                'location.latitude': COORDS['cambridge']['latitude'],
+                'location.longitude': COORDS['cambridge']['longitude'],
+                'page': page},
+        headers=get_auth_header())
 
 
 def extract_events():
     """Get the Eventbrite events within RADIUS of LAT:LON."""
     response = get_cambridge_events()
-    logging.info('processing page 41')
+    logging.info('processing page 1')
     extract_page_events(response.json()['events'])
-    for page in range(42,#response.json()['pagination']['page_number']+1,
+    for page in range(response.json()['pagination']['page_number']+1,
                       response.json()['pagination']['page_count']+1):
         logging.info('processing page {}'.format(page))
         json_response = get_cambridge_events(page).json()
