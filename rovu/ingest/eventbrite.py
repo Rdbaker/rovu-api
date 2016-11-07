@@ -39,8 +39,8 @@ def get_cambridge_events(page=1):
     return requests.get(
         EB_EVENT_URL,
         params={'location.within': RADIUS,
-                'location.latitude': COORDS['cambridge']['latitude'],
-                'location.longitude': COORDS['cambridge']['longitude'],
+                'location.latitude': COORDS['worcester']['latitude'],
+                'location.longitude': COORDS['worcester']['longitude'],
                 'page': page},
         headers=get_auth_header())
 
