@@ -8,14 +8,7 @@ Join friends and events.
 Quickstart
 ----------
 
-First, set your app's secret key as an environment variable. For example, example add the following to ``.bashrc`` or ``.bash_profile``.
-
-.. code-block:: bash
-
-    export ROVU_SECRET='something-really-secret'
-
-
-Then run the following commands to bootstrap your environment.
+First, run the following commands to bootstrap your environment.
 
 
 ::
@@ -23,21 +16,17 @@ Then run the following commands to bootstrap your environment.
     git clone https://github.com/rdbaker/rovu
     cd rovu
     pip install -r requirements/dev.txt
-    cd rovu/static
     npm install
-    cd ../..
+    ./node_modules/.bin/gulp build
     python manage.py server
 
 You will see a pretty welcome screen.
 
-Once you have installed your DBMS, run the following to create your app's database tables and perform the initial migration:
+Once you have installed PostgreSQL, run the following to create your app's database tables and perform the initial migration:
 
 ::
 
     createuser -s rovu -W  # enter rovu123 as the password
-    python manage.py setup_db
-    python manage.py db init
-    python manage.py db migrate
     python manage.py db upgrade
     python manage.py server
 
