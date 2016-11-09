@@ -30,16 +30,17 @@ class User(UserMixin, SurrogatePK, Model):
     """A user of the app."""
 
     __tablename__ = 'users'
-    email = Column(db.String(80), unique=True, nullable=False)
+    # email = Column(db.String(80), unique=True, nullable=False)
+    username = Column(db.String(80), unique=True, nullable=False)
     #: The hashed password
     password = Column(db.String(128), nullable=True)
     created_at = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
     active = Column(db.Boolean(), default=False)
     is_admin = Column(db.Boolean(), default=False)
 
-    def __init__(self, email, password=None, **kwargs):
+    def __init__(self, username, password=None, **kwargs):
         """Create instance."""
-        db.Model.__init__(self, email=email, **kwargs)
+        db.Model.__init__(self, username=username, **kwargs)
         if password:
             self.set_password(password)
         else:
@@ -47,7 +48,7 @@ class User(UserMixin, SurrogatePK, Model):
 
     def set_password(self, password):
         """Set password."""
-        self.password = bcrypt.generate_password_hash(password)
+        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
 
     def check_password(self, value):
         """Check password."""
@@ -60,4 +61,4 @@ class User(UserMixin, SurrogatePK, Model):
 
     def __repr__(self):
         """Represent instance as a unique string."""
-        return '<User({email!r})>'.format(email=self.email)
+        return '<User({username!r})>'.format(username=self.username)

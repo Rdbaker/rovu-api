@@ -6,9 +6,8 @@ from flask_login import login_required, current_user
 from rovu.api.v1.users.models import User
 from rovu.api.v1.users.schema import UserSchema
 
-blueprint = Blueprint('user', __name__, url_prefix='/api/v1/users')
+blueprint = Blueprint('users', __name__, url_prefix='/api/v1/users')
 USER_SCHEMA = UserSchema()
-
 
 
 @blueprint.route('/', strict_slashes=False)

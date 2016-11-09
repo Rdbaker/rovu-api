@@ -1,0 +1,22 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <div class="row">
+    <div class="col-md-12">
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">
+        <a class="close" title="Close" href="#" data-dismiss="alert">&times;</a>
+        {{message}}
+      </div><!-- end .alert -->
+    {% endfor %}
+    </div><!-- end col-md -->
+  </div><!-- end row -->
+  {% endif %}
+{% endwith %}
+
+<form id="loginForm" method="POST" class="form" action="/login" role="login">
+  <div class="form-group">
+    {{ form.username(placeholder="Username", class_="form-control") }}
+    {{ form.password(placeholder="Password", class_="form-control") }}
+  </div>
+  <button type="submit" class="btn btn-default">Log in</button>
+</form>

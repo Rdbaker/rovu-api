@@ -27,6 +27,8 @@ Once you have installed PostgreSQL, run the following to create your app's datab
 ::
 
     createuser -s rovu -W  # enter rovu123 as the password
+    createdb rovu
+    createdb rovu_test
     python manage.py db upgrade
     python manage.py server
 

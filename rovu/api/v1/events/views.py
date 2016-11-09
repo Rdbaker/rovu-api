@@ -8,7 +8,7 @@ from flask import Blueprint, request
 from rovu.api.v1.events.models import Event
 from rovu.api.v1.events.schema import EventSchema
 
-blueprint = Blueprint('event', __name__, url_prefix='/api/v1/events')
+blueprint = Blueprint('events', __name__, url_prefix='/api/v1/events')
 EVENT_SCHEMA = EventSchema()
 
 

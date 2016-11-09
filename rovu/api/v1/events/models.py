@@ -11,10 +11,10 @@ class Event(SurrogatePK, Model):
     """An event that takes place."""
 
     __tablename__ = 'events'
-    eb_name_html = Column(db.String(255), nullable=False)
+    eb_name_html = Column(db.String(255))
     eb_description_html = Column(db.Text())
-    eb_id = Column(db.String(90), nullable=False)
-    eb_url = Column(db.String(255), nullable=False)
+    eb_id = Column(db.String(90))
+    eb_url = Column(db.String(255))
     eb_start_utc = Column(db.String(90))
     eb_end_utc = Column(db.String(90))
     eb_capacity = Column(db.Integer())
