@@ -26,6 +26,42 @@ COORDS = {
         'latitude': '42.277613952716145',
         'longitude': '-71.80649595832824'
     },
+    'huntington_beach': {
+        'latitude': '33.692000',
+        'longitude': '-117.929021'
+    },
+    'long_beach': {
+        'latitude': '33.786281',
+        'longitide': '-118.308075'
+    },
+    'south_la': {
+        'latitude': '33.988475',
+        'longitude': '-118.300416'
+    },
+    'west_carson': {
+        'latitude': '33.809516',
+        'longitude': '-118.291573'
+    },
+    'west_la': {
+        'latitude': '34.044186',
+        'longitude': '-118.429549'
+    },
+    'la': {
+        'latitude': '34.032708',
+        'longitude': '-118.257540'
+    },
+    'westmont': {
+        'latitude': '33.940710',
+        'longitude': '-118.308527'
+    },
+    'beverly_hills': {
+        'latitude': '34.066656',
+        'longitude': '-118.428505'
+    },
+    'sf': {
+        'latitude': '37.784024',
+        'longitude': '-122.388253'
+    }
 }
 
 
@@ -39,8 +75,8 @@ def get_cambridge_events(page=1):
     return requests.get(
         EB_EVENT_URL,
         params={'location.within': RADIUS,
-                'location.latitude': COORDS['worcester']['latitude'],
-                'location.longitude': COORDS['worcester']['longitude'],
+                'location.latitude': COORDS['sf']['latitude'],
+                'location.longitude': COORDS['sf']['longitude'],
                 'page': page},
         headers=get_auth_header())
 
