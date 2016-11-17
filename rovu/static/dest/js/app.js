@@ -10491,8 +10491,8 @@ function markEvents() {
 
 GML.load(function (google) {
   window.map = new google.maps.Map(document.getElementById('rovu-app'), {
-    center: { lat: 33.8504434, lng: -118.1111005 },
-    zoom: 10,
+    center: { lat: 42.2734882, lng: -71.8072813 },
+    zoom: 16,
     clickableIcons: false,
     disableDefaultUI: true
   });
