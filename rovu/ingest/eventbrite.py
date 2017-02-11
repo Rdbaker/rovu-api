@@ -75,8 +75,8 @@ def get_cambridge_events(page=1):
     return requests.get(
         EB_EVENT_URL,
         params={'location.within': RADIUS,
-                'location.latitude': COORDS['sf']['latitude'],
-                'location.longitude': COORDS['sf']['longitude'],
+                'location.latitude': COORDS['cambridge']['latitude'],
+                'location.longitude': COORDS['cambridge']['longitude'],
                 'page': page},
         headers=get_auth_header())
 
@@ -102,9 +102,16 @@ def extract_page_events(page):
 
 def extract_event(event):
     """Get the event data and turn it into a model we're storing."""
-    event['location'] = extract_venue(event['venue_id'])
-    event_model = create_event(event)
-    event_model.save()
+    if event_does_not_exist(event):
+        event['location'] = extract_venue(event['venue_id'])
+        event_model = create_event(event)
+        event_model.save()
+
+
+def event_does_not_exist(event):
+    """Return True if the event does not exist."""
+    return Event.query.filter(Event.eb_id == event.get('id'))\
+        .first() is not None
 
 
 def create_event(event_dict):
