@@ -52,3 +52,10 @@ node_modules
 
 # my API keys
 .keys.yml
+
+# lambda-non-python files
+lambda/*
+!lambda/*.py
+!lambda/requirements.txt
+
+*DS_Store

@@ -8,10 +8,11 @@ from sqlalchemy import create_engine
 
 DATABASE_URI = os.environ.get('DATABASE_URI', '')
 EB_KEYS = os.environ.get('EB_KEYS', '').split(',')
-ENGINE = create_engine('postgresql://' + DATABASE_URI)
+ENGINE = create_engine('postgres://' + DATABASE_URI,
+                       connect_args={'sslmode': 'require'})
 
 
-def lambda_ingest():
+def lambda_ingest(*args, **kwargs):
     """Ingest events data from eventbrite."""
-    from rovu.ingest.eventbrite import extract_events
+    from eventbrite import extract_events
     extract_events(engine=ENGINE, keys=EB_KEYS)
