@@ -10492,7 +10492,7 @@ function markEvents() {
 GML.load(function (google) {
   window.map = new google.maps.Map(document.getElementById('rovu-app'), {
     center: { lat: 51.507427, lng: -0.1353227 },
-    zoom: 16,
+    zoom: 13,
     clickableIcons: false,
     disableDefaultUI: true
   });
