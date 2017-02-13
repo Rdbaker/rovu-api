@@ -22,6 +22,10 @@ COORDS = {
         'latitude': '42.360967',
         'longitude': '-71.082025'
     },
+    'london': {
+        'latitude': '51.507427',
+        'longitude': '-0.1353227'
+    },
     'worcester': {
         'latitude': '42.277613952716145',
         'longitude': '-71.80649595832824'
@@ -75,9 +79,10 @@ def get_cambridge_events(page=1):
     return requests.get(
         EB_EVENT_URL,
         params={'location.within': RADIUS,
-                'location.latitude': COORDS['cambridge']['latitude'],
-                'location.longitude': COORDS['cambridge']['longitude'],
-                'page': page},
+                'location.latitude': COORDS['london']['latitude'],
+                'location.longitude': COORDS['london']['longitude'],
+                'page': page,
+                'sort_by': '-date'},
         headers=get_auth_header())
 
 
@@ -111,7 +116,7 @@ def extract_event(event):
 def event_does_not_exist(event):
     """Return True if the event does not exist."""
     return Event.query.filter(Event.eb_id == event.get('id'))\
-        .first() is not None
+        .first() is None
 
 
 def create_event(event_dict):

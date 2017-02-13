@@ -7,7 +7,7 @@ from sqlalchemy import create_engine
 
 
 DATABASE_URI = os.environ.get('DATABASE_URI', '')
-EB_KEYS = os.environ.get('EB_KEYS', '').split(',')
+EB_KEYS = os.environ.get('EB_KEYS', '').split(':')
 ENGINE = create_engine('postgres://' + DATABASE_URI,
                        connect_args={'sslmode': 'require'})
 

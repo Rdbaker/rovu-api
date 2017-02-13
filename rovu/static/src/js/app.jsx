@@ -8,7 +8,7 @@ GML.KEY = 'AIzaSyD8oAbVWiehpO6lssOaqJXMLnLTsqtOG8M';
 function getEvents(callback) {
   let now = new Date();
   let nowISO = now.toISOString();
-  now.setDate(now.getDate()+1);
+  now.setDate(now.getDate()+2);
   let tomorrowISO = now.toISOString();
   $.getJSON('/api/v1/events', {
     event_start_after: nowISO,
@@ -53,7 +53,7 @@ function markEvents() {
 
 GML.load((google) => {
   window.map = new google.maps.Map(document.getElementById('rovu-app'), {
-    center: {lat: 42.2734882, lng: -71.8072813},
+    center: {lat: 51.507427, lng: -0.1353227},
     zoom: 16,
     clickableIcons: false,
     disableDefaultUI: true

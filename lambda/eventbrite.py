@@ -19,6 +19,10 @@ COORDS = {
         'latitude': '42.360967',
         'longitude': '-71.082025'
     },
+    'london': {
+        'latitude': '51.507427',
+        'longitude': '-0.1353227'
+    },
     'worcester': {
         'latitude': '42.277613952716145',
         'longitude': '-71.80649595832824'
@@ -72,9 +76,10 @@ def get_cambridge_events(page=1, keys=None):
     res = requests.get(
         EB_EVENT_URL,
         params={'location.within': RADIUS,
-                'location.latitude': COORDS['cambridge']['latitude'],
-                'location.longitude': COORDS['cambridge']['longitude'],
-                'page': page},
+                'location.latitude': COORDS['london']['latitude'],
+                'location.longitude': COORDS['london']['longitude'],
+                'page': page,
+                'sort_by': '-date'},
         headers=get_auth_header(keys[-1]))
     if res.status_code >= 400:
         if len(keys) == 0:
@@ -118,12 +123,12 @@ def extract_event(event, conn, key):
 def event_does_not_exist(event, conn):
     """Return True if the event does not exist."""
     return conn.execute(Event.select().where(Event.c.eb_id == event.get('id')))\
-        .first() is not None
+        .first() is None
 
 
 def create_event(event_dict):
     """Initialize an event model."""
-    return Event.insert(
+    return Event.insert().values(
         eb_name_html=event_dict.get('name', {}).get('html', ''),
         eb_description_html=event_dict.get('description', {}).get('html', ''),
         eb_id=event_dict.get('id', ''),
