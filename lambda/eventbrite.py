@@ -19,6 +19,10 @@ COORDS = {
         'latitude': '42.360967',
         'longitude': '-71.082025'
     },
+    'birmingham': {
+        'latitude': '52.477564',
+        'longitude': '-2.0037141'
+    },
     'london': {
         'latitude': '51.507427',
         'longitude': '-0.1353227'
@@ -76,8 +80,8 @@ def get_cambridge_events(page=1, keys=None):
     res = requests.get(
         EB_EVENT_URL,
         params={'location.within': RADIUS,
-                'location.latitude': COORDS['london']['latitude'],
-                'location.longitude': COORDS['london']['longitude'],
+                'location.latitude': COORDS['birmingham']['latitude'],
+                'location.longitude': COORDS['birmingham']['longitude'],
                 'page': page,
                 'sort_by': '-date'},
         headers=get_auth_header(keys[-1]))
