@@ -17,7 +17,7 @@ First, run the following commands to bootstrap your environment.
     cd rovu
     pip install -r requirements/dev.txt
     npm install
-    ./node_modules/.bin/gulp build
+    npm run dev
     python manage.py server
 
 You will see a pretty welcome screen.

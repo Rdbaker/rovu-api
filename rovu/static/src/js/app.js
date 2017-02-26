@@ -1,9 +1,17 @@
-const GML = require('google-maps');
-const $ = require('jquery');
+global.jQuery = require('jquery');
+global.$ = jQuery;
 
-const env = !!window.location.port ? "lcl" : "prd";
+require('bootstrap-sass');
+const Vue = require('vue');
 
-GML.KEY = 'AIzaSyD8oAbVWiehpO6lssOaqJXMLnLTsqtOG8M';
+const App = require('./app.vue');
+
+
+var app = new Vue({
+  el: '#rovu-app',
+  template: '<app></app>',
+  render: (h) => h(App)
+});
 
 function getEvents(callback) {
   let now = new Date();
@@ -38,7 +46,7 @@ function markEvent(ev) {
     content: windowContent
   });
   marker.addListener('click', function() {
-    mixpanel.track(env + ':marker.click');
+    mixpanel.track('marker.click');
     infowindow.open(window.map, marker);
   });
 }
@@ -50,14 +58,3 @@ function markEvents() {
     }
   });
 }
-
-GML.load((google) => {
-  window.map = new google.maps.Map(document.getElementById('rovu-app'), {
-    center: {lat: 51.507427, lng: -0.1353227},
-    zoom: 13,
-    clickableIcons: false,
-    disableDefaultUI: true
-  });
-
-  markEvents();
-});

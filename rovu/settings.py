@@ -21,6 +21,8 @@ class Config(object):
                                                                    'localhost',
                                                                    '5432',
                                                                    'rovu')
+    ENABLE_MIXPANEL = False
+    ENABLE_DRIFT = False
 
 
 class ProdConfig(Config):
@@ -30,6 +32,8 @@ class ProdConfig(Config):
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     DEBUG_TB_ENABLED = False  # Disable Debug toolbar
+    ENABLE_MIXPANEL = True
+    ENABLE_DRIFT = True
 
 
 class DevConfig(Config):

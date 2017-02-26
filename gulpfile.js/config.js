@@ -12,7 +12,7 @@ module.exports = {
 
 
   browserify: {
-    src: src + 'js/app.jsx',
+    src: src + 'js/app.js',
     dest: dest + 'js/',
     debug: (env !== 'production'),
     destName: 'app.js'
@@ -25,8 +25,9 @@ module.exports = {
     settings: {
       includePaths: [
         src + 'sass/',
-        './node_modules'
+        './node_modules',
+        './node_modules/bootstrap-sass/assets/stylesheets'
       ]
     }
-  }
+  },
 };
