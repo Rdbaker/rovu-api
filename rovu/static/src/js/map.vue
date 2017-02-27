@@ -27,7 +27,8 @@ export default {
 
   mounted () {
     GML.load((google) => {
-      this.map = new google.maps.Map(document.getElementById('rovu-gmap-elt'), {
+      global.google = google;
+      global.map = new google.maps.Map(document.getElementById('rovu-gmap-elt'), {
         center: center,
         zoom: 11,
         clickableIcons: false,
