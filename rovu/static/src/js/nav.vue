@@ -98,7 +98,7 @@ export default {
       });
       var start_date = new Date(ev.start_datetime);
       var end_date = new Date(ev.end_datetime);
-      var addr = !!ev.venue.address ? ev.venue.address.address_1 : "Address Unknown";
+      var addr = (!!ev.venue.address && !!ev.venue.address.address_1) ? ev.venue.address.address_1 : "Address Unknown";
       var windowContent = ('<div class="event-content ui card">' +
           '<div class="event-title content"><div class="header">' + ev.name + '</div></div>' +
           '<div class="ui sub header"><div class="event-venue">' + ev.venue.name + '</div></div>' +
