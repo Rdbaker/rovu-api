@@ -21,6 +21,8 @@ event = Table(
     Column('eb_end_utc', String(90)),
     Column('eb_capacity', Integer()),
     Column('eb_venue', JSONB()),
+    Column('eb_category_id', String(90)),
+    Column('eb_subcategory_id', String(90)),
     Column('start_datetime', DateTime(), default=datetime.datetime.utcnow),
     Column('end_datetime', DateTime(), default=datetime.datetime.utcnow)
 )
