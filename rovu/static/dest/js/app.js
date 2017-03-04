@@ -42753,6 +42753,7 @@ if (module.hot) {(function () {  var hotAPI = require("vueify/node_modules/vue-h
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
 },{"google-maps":1,"vue":5,"vueify/lib/insert-css":6,"vueify/node_modules/vue-hot-reload-api":7}],11:[function(require,module,exports){
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert("#event-category {\n  max-height: 300px;\n  overflow: scroll;\n}\n\n.small-text {\n  color: #888;\n  font-size: 0.8em;\n}")
 ;(function(){
 'use strict';
 
@@ -42783,8 +42784,24 @@ var wkndEndISO = wkndStart.toISOString();
 exports.default = {
   name: 'rovu-nav',
 
+  created: function created() {
+    this.getCategoryFacets();
+    this.intervalName = null;
+  },
+
+  data: function data() {
+    return {
+      categoryFacets: []
+    };
+  },
+
   mounted: function mounted() {
     $('.ui.dropdown').dropdown();
+    this.reqArgs = {
+      event_start_after: null,
+      event_end_before: null,
+      category_id: null
+    };
     this.markers = [];
     this.intervals = {
       h24: {
@@ -42808,14 +42825,51 @@ exports.default = {
 
   methods: {
     changeInterval: function changeInterval(evt) {
-      this.getEvents(this.intervals[$(evt.currentTarget).data('interval')]);
+      var elt = $(evt.currentTarget);
+      var interval = this.intervals[elt.data('interval')];
+      if (this.intervalName === elt.data('interval')) {
+        elt.removeClass('active');
+        this.reqArgs.event_start_after = null;
+        this.reqArgs.event_end_before = null;
+        this.intervalName = null;
+      } else {
+        this.intervalName = elt.data('interval');
+        this.reqArgs.event_start_after = interval.start;
+        this.reqArgs.event_end_before = interval.end;
+      }
+      this.getEvents();
     },
 
-    getEvents: function getEvents(interval) {
-      $.getJSON('/api/v1/events', {
-        event_start_after: interval.start,
-        event_end_before: interval.end
-      }, this.markEvents);
+    changeCategory: function changeCategory(evt) {
+      var elt = $(evt.currentTarget);
+      if (elt.data('id') === this.reqArgs.category_id) {
+        elt.removeClass('active');
+        this.reqArgs.category_id = null;
+      } else {
+        this.reqArgs.category_id = elt.data('id');
+      }
+      this.getCategoryEvents();
+    },
+
+    getCategoryFacets: function getCategoryFacets() {
+      $.get('/api/v1/events/categories/facets').done(this.assignFacets);
+    },
+
+    assignFacets: function assignFacets(facets) {
+      this.categoryFacets = facets;
+    },
+
+    getEvents: function getEvents() {
+      $.getJSON('/api/v1/events', this.reqArgs, this.parseResponse);
+    },
+
+    getCategoryEvents: function getCategoryEvents() {
+      $.get('/api/v1/events', this.reqArgs, this.parseResponse);
+    },
+
+    parseResponse: function parseResponse(res) {
+      this.assignFacets(res.facets);
+      this.markEvents(res.events);
     },
 
     clearEvents: function clearEvents() {
@@ -42845,7 +42899,6 @@ exports.default = {
         content: windowContent
       });
       marker.addListener('click', function () {
-        mixpanel.track('marker.click');
         infowindow.open(map, marker);
       });
       this.markers.push(marker);
@@ -42857,12 +42910,13 @@ exports.default = {
 if (module.exports.__esModule) module.exports = module.exports.default
 var __vue__options__ = (typeof module.exports === "function"? module.exports.options: module.exports)
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
-__vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"ui top attached text menu"},[_c('div',{staticClass:"ui dropdown item"},[_vm._v("\n    Show events within\n    "),_c('i',{staticClass:"dropdown icon"}),_vm._v(" "),_c('div',{staticClass:"menu",attrs:{"id":"events-within"}},[_c('div',{staticClass:"item",attrs:{"data-interval":"h24"},on:{"click":_vm.changeInterval}},[_vm._v("24hrs")]),_vm._v(" "),_c('div',{staticClass:"item",attrs:{"data-interval":"d3"},on:{"click":_vm.changeInterval}},[_vm._v("next 3 days")]),_vm._v(" "),_c('div',{staticClass:"item",attrs:{"data-interval":"w1"},on:{"click":_vm.changeInterval}},[_vm._v("the next week")]),_vm._v(" "),_c('div',{staticClass:"item",attrs:{"data-interval":"wknd"},on:{"click":_vm.changeInterval}},[_vm._v("the weekend")])])])])}
+__vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"ui top attached text menu"},[_c('div',{staticClass:"ui dropdown item"},[_vm._v("\n    Show events within\n    "),_c('i',{staticClass:"dropdown icon"}),_vm._v(" "),_c('div',{staticClass:"menu",attrs:{"id":"events-within"}},[_c('div',{staticClass:"item",class:{ active: _vm.intervalName == 'h24' },attrs:{"data-interval":"h24"},on:{"click":_vm.changeInterval}},[_vm._v("24hrs"),(_vm.intervalName == 'h24')?_c('div',{staticClass:"small-text"},[_vm._v("× (click to remove filter)")]):_vm._e()]),_vm._v(" "),_c('div',{staticClass:"item",class:{ active: _vm.intervalName == 'd3' },attrs:{"data-interval":"d3"},on:{"click":_vm.changeInterval}},[_vm._v("next 3 days"),(_vm.intervalName == 'd3')?_c('div',{staticClass:"small-text"},[_vm._v("× (click to remove filter)")]):_vm._e()]),_vm._v(" "),_c('div',{staticClass:"item",class:{ active: _vm.intervalName == 'w1' },attrs:{"data-interval":"w1"},on:{"click":_vm.changeInterval}},[_vm._v("the next week"),(_vm.intervalName == 'w1')?_c('div',{staticClass:"small-text"},[_vm._v("× (click to remove filter)")]):_vm._e()]),_vm._v(" "),_c('div',{staticClass:"item",class:{ active: _vm.intervalName == 'wknd' },attrs:{"data-interval":"wknd"},on:{"click":_vm.changeInterval}},[_vm._v("the weekend"),(_vm.intervalName == 'wknd')?_c('div',{staticClass:"small-text"},[_vm._v("× (click to remove filter)")]):_vm._e()])])]),_vm._v(" "),_c('div',{staticClass:"ui dropdown item"},[_vm._v("\n    Show events of type\n    "),_c('i',{staticClass:"dropdown icon"}),_vm._v(" "),_c('div',{staticClass:"menu",attrs:{"id":"event-category"}},_vm._l((_vm.categoryFacets),function(cat){return _c('div',{staticClass:"item",class:{ active: _vm.reqArgs.category_id == cat.category_id },attrs:{"data-id":cat.category_id},on:{"click":_vm.changeCategory}},[_c('div',[_vm._v(_vm._s(cat.name))]),_vm._v(" "),_c('div',{staticClass:"small-text"},[_vm._v("("+_vm._s(cat.event_count)+")")]),_vm._v(" "),(_vm.reqArgs.category_id == cat.category_id)?_c('div',{staticClass:"small-text"},[_vm._v("× (click to remove filter)")]):_vm._e()])}))])])}
 __vue__options__.staticRenderFns = []
 if (module.hot) {(function () {  var hotAPI = require("vueify/node_modules/vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
+  module.hot.dispose(__vueify_style_dispose__)
   if (!module.hot.data) {
     hotAPI.createRecord("data-v-ef85c68a", __vue__options__)
   } else {
@@ -42870,6 +42924,6 @@ if (module.hot) {(function () {  var hotAPI = require("vueify/node_modules/vue-h
   }
 })()}
 
-},{"jquery":2,"vue":5,"vueify/node_modules/vue-hot-reload-api":7}]},{},[8])
+},{"jquery":2,"vue":5,"vueify/lib/insert-css":6,"vueify/node_modules/vue-hot-reload-api":7}]},{},[8])
 
 //# sourceMappingURL=rovu/static/src/js/app.js/app.js.map
