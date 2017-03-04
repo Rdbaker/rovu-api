@@ -139,6 +139,8 @@ def create_event(event_dict):
         eb_end_utc=event_dict.get('end', {}).get('utc', ''),
         eb_capacity=event_dict.get('capacity', {}),
         eb_venue=event_dict.get('location', {}),
+        eb_category_id=event_dict.get('category_id'),
+        eb_subcategory_id=event_dict.get('subcategory_id'),
         start_datetime=parser.parse(event_dict.get('start', {}).get('utc', '')),
         end_datetime=parser.parse(event_dict.get('end', {}).get('utc', ''))
     )
