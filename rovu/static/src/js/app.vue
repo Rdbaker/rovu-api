@@ -22,7 +22,7 @@ html, body {
 <script>
 
 import RovuMap from './map.vue'
-import RovuNav from './nav.vue'
+import RovuNav from './nav/nav.vue'
 
 export default {
   name: 'app',

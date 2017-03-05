@@ -42605,52 +42605,6 @@ var app = new Vue({
   render: (h) => h(App)
 });
 
-function getEvents(callback) {
-  let now = new Date();
-  let nowISO = now.toISOString();
-  now.setDate(now.getDate()+2);
-  let tomorrowISO = now.toISOString();
-  $.getJSON('/api/v1/events', {
-    event_start_after: nowISO,
-    event_end_before: tomorrowISO
-  }, callback);
-}
-
-function markEvent(ev) {
-  var marker = new google.maps.Marker({
-    position: {lat: Number(ev.venue.latitude), lng: Number(ev.venue.longitude)},
-    map: window.map,
-    title: ev.name
-  });
-  var start_date = new Date(ev.start_datetime);
-  var end_date = new Date(ev.end_datetime);
-  var addr = !!ev.venue.address ? ev.venue.address.address_1 : "Address Unknown";
-  var windowContent = ('<div class="event-content">' +
-      '<div class="event-title">' + ev.name + '</div>' +
-      '<div class="event-venue">' + ev.venue.name + '</div>' +
-      '<div class="event-addr">' + addr + '</div>' +
-      '<div class="event-date">' + start_date.toDateString() + '</div>' +
-      '<div class="event-start-time">From: ' + start_date.toLocaleTimeString() + '</div>' +
-      '<div class="event-end-time">To: ' + end_date.toLocaleTimeString() + '</div>' +
-      '</div>'
-  );
-  var infowindow = new google.maps.InfoWindow({
-    content: windowContent
-  });
-  marker.addListener('click', function() {
-    mixpanel.track('marker.click');
-    infowindow.open(window.map, marker);
-  });
-}
-
-function markEvents() {
-  getEvents(function(events) {
-    for(var i=0; i<events.length; i++) {
-      markEvent(events[i]);
-    }
-  });
-}
-
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
 },{"./app.vue":9,"jquery":2,"semantic-ui/dist/semantic":4,"vue":5}],9:[function(require,module,exports){
@@ -42666,7 +42620,7 @@ var _map = require('./map.vue');
 
 var _map2 = _interopRequireDefault(_map);
 
-var _nav = require('./nav.vue');
+var _nav = require('./nav/nav.vue');
 
 var _nav2 = _interopRequireDefault(_nav);
 
@@ -42697,7 +42651,7 @@ if (module.hot) {(function () {  var hotAPI = require("vueify/node_modules/vue-h
   }
 })()}
 
-},{"./map.vue":10,"./nav.vue":11,"vue":5,"vueify/lib/insert-css":6,"vueify/node_modules/vue-hot-reload-api":7}],10:[function(require,module,exports){
+},{"./map.vue":10,"./nav/nav.vue":11,"vue":5,"vueify/lib/insert-css":6,"vueify/node_modules/vue-hot-reload-api":7}],10:[function(require,module,exports){
 (function (global){
 var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert("#rovu-gmap-elt {\n  height: 100%;\n}")
 ;(function(){
@@ -42760,8 +42714,6 @@ var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert("#event-c
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-
 $ = require('jquery');
 
 var now = new Date();
@@ -42918,9 +42870,9 @@ if (module.hot) {(function () {  var hotAPI = require("vueify/node_modules/vue-h
   module.hot.accept()
   module.hot.dispose(__vueify_style_dispose__)
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-ef85c68a", __vue__options__)
+    hotAPI.createRecord("data-v-562eefcf", __vue__options__)
   } else {
-    hotAPI.reload("data-v-ef85c68a", __vue__options__)
+    hotAPI.rerender("data-v-562eefcf", __vue__options__)
   }
 })()}
 

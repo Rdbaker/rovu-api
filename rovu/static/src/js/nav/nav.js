@@ -1,49 +1,3 @@
-<template>
-<div class="ui top attached text menu">
-  <div class="ui dropdown item">
-    Show events within
-    <i class="dropdown icon"></i>
-    <div class="menu" id="events-within">
-      <div class="item" :class="{ active: intervalName == 'h24' }"
-        data-interval="h24" v-on:click="changeInterval">24hrs<div class="small-text" v-if="intervalName == 'h24'">&times; (click to remove filter)</div></div>
-      <div class="item" :class="{ active: intervalName == 'd3' }"
-        data-interval="d3" v-on:click="changeInterval">next 3 days<div class="small-text" v-if="intervalName == 'd3'">&times; (click to remove filter)</div></div>
-      <div class="item" :class="{ active: intervalName == 'w1' }"
-        data-interval="w1" v-on:click="changeInterval">the next week<div class="small-text" v-if="intervalName == 'w1'">&times; (click to remove filter)</div></div>
-      <div class="item" :class="{ active: intervalName == 'wknd' }"
-        data-interval="wknd" v-on:click="changeInterval">the weekend<div class="small-text" v-if="intervalName == 'wknd'">&times; (click to remove filter)</div></div>
-    </div>
-  </div>
-  <div class="ui dropdown item">
-    Show events of type
-    <i class="dropdown icon"></i>
-    <div class="menu" id="event-category">
-      <div class="item" :class="{ active: reqArgs.category_id == cat.category_id }"
-          v-bind:data-id="cat.category_id" v-for="cat in categoryFacets" v-on:click="changeCategory">
-        <div>{{ cat.name }}</div>
-        <div class="small-text">({{ cat.event_count }})</div>
-        <div class="small-text" v-if="reqArgs.category_id == cat.category_id">&times; (click to remove filter)</div>
-      </div>
-    </div>
-  </div>
-</div>
-</template>
-
-
-<style>
-#event-category {
-  max-height: 300px;
-  overflow: scroll;
-}
-
-.small-text {
-  color: #888;
-  font-size: 0.8em;
-}
-</style>
-
-
-<script>
 $ = require('jquery');
 
 let now = new Date();
@@ -144,7 +98,7 @@ export default {
     },
 
     getEvents: function() {
-      $.getJSON('/api/v1/events', this.reqArgs, this.parseResponse);
+      $.get('/api/v1/events', this.reqArgs, this.parseResponse);
     },
 
     getCategoryEvents: function() {
@@ -199,4 +153,3 @@ export default {
 
   },
 };
-</script>
