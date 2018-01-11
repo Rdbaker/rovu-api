@@ -1,21 +1,21 @@
-$ = require('jquery');
+const $ = require('jquery');
 
-let now = new Date();
-let nowISO = now.toISOString();
+const now = new Date();
+const nowISO = now.toISOString();
 now.setDate(now.getDate()+1);
-let tomorrowISO = now.toISOString();
+const tomorrowISO = now.toISOString();
 now.setDate(now.getDate()+2);
-let in3DaysISO = now.toISOString();
+const in3DaysISO = now.toISOString();
 now.setDate(now.getDate()+4);
-let in7DaysISO = now.toISOString();
-let tmp = new Date();
-let friday = 5;
-let sunday = 0;
-let move = friday - tmp.getDay();
-let wkndStart = new Date(tmp.getFullYear(), tmp.getMonth(), tmp.getDate() + move);
-let wkndStartISO = wkndStart.toISOString();
+const in7DaysISO = now.toISOString();
+const tmp = new Date();
+const friday = 5;
+const sunday = 0;
+const move = friday - tmp.getDay();
+const wkndStart = new Date(tmp.getFullYear(), tmp.getMonth(), tmp.getDate() + move);
+const wkndStartISO = wkndStart.toISOString();
 wkndStart.setDate(wkndStart.getDate()+3);
-let wkndEndISO = wkndStart.toISOString();
+const wkndEndISO = wkndStart.toISOString();
 
 
 export default {

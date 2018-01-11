@@ -2,36 +2,33 @@ var gulp = require('gulp');
 var config = require('../config.js').browserify;
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-var uglify = require('gulp-uglify');
-var sourcemaps = require('gulp-sourcemaps');
-var gutil = require('gulp-util');
 var vueify = require('vueify');
+var babelify = require('babelify');
+var notify = require("gulp-notify");
+
+function handleErrors() {
+  var args = Array.prototype.slice.call(arguments);
+
+  // Send error to notification center with gulp-notify
+  notify.onError({
+    title: "Compile Error",
+    message: "<%= error %>"
+  }).apply(this, args);
+
+  // Keep gulp from hanging on this task
+  this.emit('end');
+}
 
 
 gulp.task('build', ['sass'], function() {
-  var b = browserify({
+  return browserify({
     entries: config.src,
     debug: config.debug
   })
-  .transform(vueify);
-
-  if(config.debug) {
-    return b.bundle()
-      .pipe(source(config.destName))
-      .pipe(buffer())
-      .pipe(sourcemaps.init({loadMaps: true}))
-      .on('error', gutil.log)
-      .pipe(sourcemaps.write(config.src))
-      .pipe(gulp.dest(config.dest));
-  } else {
-    return b.bundle()
-          .pipe(source(config.destName))
-          .pipe(buffer())
-          .pipe(sourcemaps.init({loadMaps: false}))
-          .pipe(uglify())
-          .on('error', gutil.log)
-          .pipe(sourcemaps.write(config.src))
-          .pipe(gulp.dest(config.dest));
-  }
+  .transform(vueify)
+  .transform(babelify)
+  .bundle()
+  .on('error', handleErrors)
+  .pipe(source(config.destName))
+  .pipe(gulp.dest(config.dest))
 });

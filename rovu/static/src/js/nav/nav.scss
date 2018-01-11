@@ -1,0 +1,15 @@
+#event-category {
+  max-height: 300px;
+  overflow: scroll;
+}
+
+.small-text {
+  color: #888;
+  font-size: 0.8em;
+}
+
+.ui.top.attached.text.menu {
+  @media screen and (max-width: 500px) {
+    font-size: 2em;
+  }
+}

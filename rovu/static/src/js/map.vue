@@ -18,8 +18,8 @@ const GML = require('google-maps');
 GML.KEY = 'AIzaSyD8oAbVWiehpO6lssOaqJXMLnLTsqtOG8M';
 
 const center = {
-  lat: 52.477564,
-  lng: -2.003714
+  lat: 42.3617131,
+  lng: -71.0921,
 };
 
 export default {
@@ -30,7 +30,7 @@ export default {
       global.google = google;
       global.map = new google.maps.Map(document.getElementById('rovu-gmap-elt'), {
         center: center,
-        zoom: 11,
+        zoom: 14,
         clickableIcons: false,
         disableDefaultUI: true
       });

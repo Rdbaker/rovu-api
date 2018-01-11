@@ -61,7 +61,7 @@ To run all tests, run ::
 Migrations
 ----------
 
-Whenever a database migration needs to be made. Run the following commands:
+Whenever a database migration needs to be made. Run the following command:
 ::
 
     python manage.py db migrate

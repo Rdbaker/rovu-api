@@ -6,7 +6,6 @@ const Vue = require('vue');
 
 const App = require('./app.vue');
 
-
 var app = new Vue({
   el: '#rovu-app',
   template: '<app></app>',

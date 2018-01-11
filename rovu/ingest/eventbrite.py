@@ -17,7 +17,7 @@ EB_HOST = 'https://www.eventbriteapi.com/v3'
 EB_EVENT_URL = '{}/events/search'.format(EB_HOST)
 EB_VENUE_URL = '{}/venues'.format(EB_HOST)
 RADIUS = '5mi'
-LOCATION = os.environ.get('INGEST_LOCATION', 'london')
+LOCATION = os.environ.get('INGEST_LOCATION', 'cambridge')
 COORDS = {
     'cambridge': {
         'latitude': '42.360967',

@@ -1,51 +1,41 @@
 {
   "name": "rovu",
   "version": "1.0.0",
-  "description": "A flask API cookiecutter",
-  "main": "index.js",
-  "author": "Ryan Baker",
-  "license": "ISC",
-  "browser": {
-    "vue": "vue/dist/vue.common.js"
-  },
+  "description": "=============================== Rovu API ===============================",
+  "main": "gulpfile.js",
   "dependencies": {
-    "bootstrap-sass": "^3.3.7",
     "google-maps": "^3.2.1",
-    "jquery": "^3.1.1",
-    "vue": "^2.1.10"
+    "jquery": "^3.2.1",
+    "semantic-ui": "^2.2.13",
+    "vue": "^2.5.2"
   },
   "devDependencies": {
-    "browserify": "^14.1.0",
-    "eslint": "^3.3.0",
-    "eslint-config-standard": "^5.3.5",
-    "eslint-plugin-html": "^1.5.2",
-    "eslint-plugin-promise": "^2.0.1",
-    "eslint-plugin-standard": "^2.0.0",
-    "gulp": "^3.9.1",
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^8.0.0",
+    "browserify": "^14.5.0",
+    "gulp-notify": "^3.0.0",
     "gulp-sass": "^3.1.0",
-    "gulp-sourcemaps": "^2.4.1",
-    "gulp-uglify": "^2.0.1",
-    "gulp-util": "^3.0.8",
-    "jasmine-core": "^2.4.1",
-    "karma": "^1.2.0",
-    "karma-jasmine": "^1.0.2",
-    "karma-phantomjs-launcher": "^1.0.0",
-    "karma-spec-reporter": "0.0.26",
-    "node-sass": "^4.5.0",
-    "npm-run-all": "^2.3.0",
-    "phantomjs-prebuilt": "^2.1.3",
-    "proxyquireify": "^3.0.1",
-    "require-dir": "^0.3.1",
-    "semantic-ui": "^2.2.9",
-    "uglify-js": "^2.5.0",
+    "gulp-sourcemaps": "^2.6.1",
+    "require-dir": "^0.3.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "vueify": "^9.4.0",
-    "watchify": "^3.4.0"
+    "vue-template-compiler": "^2.5.2",
+    "vueify": "^9.4.1"
   },
   "scripts": {
-    "styles": "gulp sass",
-    "dev": "gulp build",
+    "dev": "gulp",
     "test": "gulp test"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rdbaker/rovu-api.git"
+  },
+  "author": "Ryan Baker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rdbaker/rovu-api/issues"
+  },
+  "homepage": "https://github.com/Rdbaker/rovu-api#readme"
 }
