@@ -6,7 +6,7 @@
 <style>
 
 #rovu-gmap-elt {
-  height: 100%;
+  height: calc(100% - 60px);
 }
 
 </style>

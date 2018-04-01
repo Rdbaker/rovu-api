@@ -11,6 +11,7 @@ class EventSchema(Schema):
     start_datetime = fields.DateTime()
     end_datetime = fields.DateTime()
     venue = fields.Raw(attribute='eb_venue')
+    raw_data = fields.Raw(attribute='raw_eb_data')
 
     class Meta:
         type_ = 'events'

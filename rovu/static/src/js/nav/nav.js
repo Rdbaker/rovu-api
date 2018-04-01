@@ -1,3 +1,5 @@
+import { mapActions, mapGetters } from 'vuex';
+
 const $ = require('jquery');
 
 const now = new Date();
@@ -22,15 +24,14 @@ export default {
   name: 'rovu-nav',
 
   created: function() {
-    this.getCategoryFacets();
     this.intervalName = null;
+    this.reqArgs = {}
+    this.$store.dispatch('fetchFacets')
   },
 
-  data: function() {
-    return {
-      categoryFacets: []
-    };
-  },
+  computed: mapGetters([
+    'eventFacets'
+  ]),
 
   mounted: function() {
     $('.ui.dropdown').dropdown();
@@ -88,15 +89,6 @@ export default {
       this.getCategoryEvents();
     },
 
-    getCategoryFacets: function() {
-      $.get('/api/v1/events/categories/facets')
-        .done(this.assignFacets);
-    },
-
-    assignFacets: function(facets) {
-      this.categoryFacets = facets;
-    },
-
     getEvents: function() {
       $.get('/api/v1/events', this.reqArgs, this.parseResponse);
     },
@@ -106,7 +98,6 @@ export default {
     },
 
     parseResponse: function(res) {
-      this.assignFacets(res.facets);
       this.markEvents(res.events);
     },
 

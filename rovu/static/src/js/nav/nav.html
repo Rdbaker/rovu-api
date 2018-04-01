@@ -18,10 +18,10 @@
     <i class="dropdown icon"></i>
     <div class="menu" id="event-category">
       <div class="item" :class="{ active: reqArgs.category_id == cat.category_id }"
-          v-bind:data-id="cat.category_id" v-for="cat in categoryFacets" v-on:click="changeCategory">
+          v-bind:data-id="cat.category_id" v-for="cat in eventFacets" v-on:click="changeCategory">
         <div>{{ cat.name }}</div>
         <div class="small-text">({{ cat.event_count }})</div>
-        <div class="small-text" v-if="reqArgs.category_id == cat.category_id">&times; (click to remove filter)</div>
+        <div class="small-text" v-if="reqArgs.category_id === cat.category_id">&times; (click to remove filter)</div>
       </div>
     </div>
   </div>

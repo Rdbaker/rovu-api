@@ -14,5 +14,6 @@ ENGINE = create_engine('postgres://' + DATABASE_URI,
 
 def lambda_ingest(*args, **kwargs):
     """Ingest events data from eventbrite."""
-    from eventbrite import extract_events
+    from eventbrite import extract_events, execute_reaper
     extract_events(engine=ENGINE, keys=EB_KEYS)
+    execute_reaper(engine=ENGINE)

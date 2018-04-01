@@ -59,3 +59,4 @@ lambda/*
 !lambda/requirements.txt
 
 *DS_Store
+.vscode

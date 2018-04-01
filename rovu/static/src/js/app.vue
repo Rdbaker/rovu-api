@@ -23,9 +23,12 @@ html, body {
 
 import RovuMap from './map.vue'
 import RovuNav from './nav/nav.vue'
+import { mapGetters, mapActions } from 'vuex'
+import store from './store'
 
 export default {
   name: 'app',
+  store,
   components: {
     RovuMap,
     RovuNav

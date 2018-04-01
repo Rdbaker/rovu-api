@@ -111,6 +111,12 @@ def extract_events(engine, keys):
         extract_page_events(json_events, conn, keys[-1])
 
 
+def execute_reaper(engine):
+    """Clear out the database of old events."""
+    conn = engine.connect()
+    logging.info('executing reaper')
+
+
 def extract_page_events(page, conn, key):
     """Pull the events out of the Eventbrite page."""
     for event in page:
@@ -143,6 +149,7 @@ def create_event(event_dict):
         eb_end_utc=event_dict.get('end', {}).get('utc', ''),
         eb_capacity=event_dict.get('capacity', {}),
         eb_venue=event_dict.get('location', {}),
+        raw_eb_data=event_dict,
         eb_category_id=event_dict.get('category_id'),
         eb_subcategory_id=event_dict.get('subcategory_id'),
         start_datetime=parser.parse(event_dict.get('start', {}).get('utc', '')),

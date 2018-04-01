@@ -27,6 +27,7 @@ class Event(SurrogatePK, Model):
     eb_end_utc = Column(db.String(90))
     eb_capacity = Column(db.Integer())
     eb_venue = Column(JSONB())
+    raw_eb_data = Column(JSONB())
     eb_category_id = Column(db.String())
     eb_subcategory_id = Column(db.String())
     start_datetime = Column(db.DateTime(), default=datetime.datetime.utcnow)
