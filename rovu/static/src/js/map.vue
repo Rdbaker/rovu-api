@@ -9,6 +9,12 @@
   height: calc(100% - 60px);
 }
 
+@media screen and (max-width: 500px){
+  #rovu-gmap-elt {
+    height: 100%;
+  }
+}
+
 </style>
 
 

@@ -1,4 +1,6 @@
 import { mapActions, mapGetters } from 'vuex';
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import { merge } from 'lodash';
 
 const $ = require('jquery');
 
@@ -29,8 +31,16 @@ export default {
     this.$store.dispatch('fetchFacets')
   },
 
+  components: {
+    FontAwesomeIcon,
+  },
+
   computed: mapGetters([
-    'eventFacets'
+    'eventFacets',
+    'eventList',
+    'searchFacetId',
+    'searchEventStart',
+    'searchEventEnd',
   ]),
 
   mounted: function() {
@@ -61,86 +71,97 @@ export default {
     }
   },
 
-  methods: {
-    changeInterval: function(evt) {
-      let elt = $(evt.currentTarget);
-      let interval = this.intervals[elt.data('interval')];
-      if(this.intervalName === elt.data('interval')) {
-        elt.removeClass('active');
-        this.reqArgs.event_start_after = null;
-        this.reqArgs.event_end_before = null;
-        this.intervalName = null;
-      } else {
-        this.intervalName = elt.data('interval');
-        this.reqArgs.event_start_after = interval.start;
-        this.reqArgs.event_end_before = interval.end;
+  methods: merge(
+    mapActions(['openMobileSearchDrawer']),
+    {
+      changeInterval: function(evt) {
+        let elt = $(evt.currentTarget);
+        let interval = this.intervals[elt.data('interval')];
+        if(this.intervalName === elt.data('interval')) {
+          elt.removeClass('active');
+          this.reqArgs.event_start_after = null;
+          this.$store.dispatch('setSearchStart', null)
+          this.reqArgs.event_end_before = null;
+          this.$store.dispatch('setSearchEnd', null)
+          this.intervalName = null;
+        } else {
+          this.intervalName = elt.data('interval');
+          this.$store.dispatch('setSearchStart', interval.start)
+          this.reqArgs.event_start_after = interval.start;
+          this.$store.dispatch('setSearchEnd', interval.end)
+          this.reqArgs.event_end_before = interval.end;
+        }
+        this.$store.dispatch('fetchEvents')
+        this.getEvents();
+      },
+
+      changeCategory: function(evt) {
+        let elt = $(evt.currentTarget);
+        if(elt.data('id') === this.reqArgs.category_id) {
+          elt.removeClass('active');
+          this.$store.dispatch('setSearchFacet', null)
+          this.reqArgs.category_id = null;
+        } else {
+          this.$store.dispatch('setSearchFacet', elt.data('id'))
+          this.reqArgs.category_id = elt.data('id');
+        }
+        this.$store.dispatch('fetchEvents')
+        this.getCategoryEvents();
+      },
+
+      getEvents: function() {
+        $.get('/api/v1/events', this.reqArgs, this.parseResponse);
+      },
+
+      getCategoryEvents: function() {
+        $.get('/api/v1/events', this.reqArgs, this.parseResponse);
+      },
+
+      parseResponse: function(res) {
+        this.markEvents(res.events);
+      },
+
+      clearEvents: function() {
+        for(var i=0; i<this.markers.length; i++) {
+          this.markers[i].setMap(null);
+        }
+      },
+
+      markEvents: function(events) {
+        this.clearEvents();
+        for(var i=0; i<events.length; i++) {
+          this.markEvent(events[i]);
+        }
+      },
+
+      markEvent: function(ev) {
+        var marker = new google.maps.Marker({
+          position: {lat: Number(ev.venue.latitude), lng: Number(ev.venue.longitude)},
+          map: map,
+          title: ev.name
+        });
+        var start_date = new Date(ev.start_datetime);
+        var end_date = new Date(ev.end_datetime);
+        var addr = (!!ev.venue.address && !!ev.venue.address.address_1) ? ev.venue.address.address_1 : "Address Unknown";
+        var windowContent = ('<div class="event-content ui card">' +
+            '<div class="event-title content"><div class="header">' + ev.name + '</div></div>' +
+            '<div class="ui sub header"><div class="event-venue">' + ev.venue.name + '</div></div>' +
+            '<div class="event-addr">' + addr + '</div>' +
+            '<div class="event-date">' + start_date.toDateString() + '</div>' +
+            '<div class="event-start-time">From: ' + start_date.toLocaleTimeString() + '</div>' +
+            '<div class="event-end-time">To: ' + end_date.toLocaleTimeString() + '</div>' +
+            '</div>'
+        );
+        var infowindow = new google.maps.InfoWindow({
+          content: windowContent
+        });
+        marker.addListener('click', function() {
+          //mixpanel.track('marker.click');
+          infowindow.open(map, marker);
+        });
+        this.markers.push(marker);
       }
-      this.getEvents();
+
     },
-
-    changeCategory: function(evt) {
-      let elt = $(evt.currentTarget);
-      if(elt.data('id') === this.reqArgs.category_id) {
-        elt.removeClass('active');
-        this.reqArgs.category_id = null;
-      } else {
-        this.reqArgs.category_id = elt.data('id');
-      }
-      this.getCategoryEvents();
-    },
-
-    getEvents: function() {
-      $.get('/api/v1/events', this.reqArgs, this.parseResponse);
-    },
-
-    getCategoryEvents: function() {
-      $.get('/api/v1/events', this.reqArgs, this.parseResponse);
-    },
-
-    parseResponse: function(res) {
-      this.markEvents(res.events);
-    },
-
-    clearEvents: function() {
-      for(var i=0; i<this.markers.length; i++) {
-        this.markers[i].setMap(null);
-      }
-    },
-
-    markEvents: function(events) {
-      this.clearEvents();
-      for(var i=0; i<events.length; i++) {
-        this.markEvent(events[i]);
-      }
-    },
-
-    markEvent: function(ev) {
-      var marker = new google.maps.Marker({
-        position: {lat: Number(ev.venue.latitude), lng: Number(ev.venue.longitude)},
-        map: map,
-        title: ev.name
-      });
-      var start_date = new Date(ev.start_datetime);
-      var end_date = new Date(ev.end_datetime);
-      var addr = (!!ev.venue.address && !!ev.venue.address.address_1) ? ev.venue.address.address_1 : "Address Unknown";
-      var windowContent = ('<div class="event-content ui card">' +
-          '<div class="event-title content"><div class="header">' + ev.name + '</div></div>' +
-          '<div class="ui sub header"><div class="event-venue">' + ev.venue.name + '</div></div>' +
-          '<div class="event-addr">' + addr + '</div>' +
-          '<div class="event-date">' + start_date.toDateString() + '</div>' +
-          '<div class="event-start-time">From: ' + start_date.toLocaleTimeString() + '</div>' +
-          '<div class="event-end-time">To: ' + end_date.toLocaleTimeString() + '</div>' +
-          '</div>'
-      );
-      var infowindow = new google.maps.InfoWindow({
-        content: windowContent
-      });
-      marker.addListener('click', function() {
-        //mixpanel.track('marker.click');
-        infowindow.open(map, marker);
-      });
-      this.markers.push(marker);
-    }
-
-  },
+  )
 };

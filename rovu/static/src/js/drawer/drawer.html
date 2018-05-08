@@ -1,0 +1,7 @@
+<div v-bind:class="{ ['rovu-drawer-active']: isActive }" class="rovu-drawer">
+  <div class="rovu-drawer-content" v-bind:class="{ ['rovu-drawer-content-active']: isActive }">
+    <datepicker @selected="setStartDate"></datepicker>
+  </div>
+  <div class="rovu-drawer-mask" v-on:click="closeMobileSearchDrawer">
+  </div>
+</div>

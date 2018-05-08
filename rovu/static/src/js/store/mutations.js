@@ -18,4 +18,26 @@ module.exports = {
   fetchFacetsFailed (state) {
     state.eventData.facets.loading = false
   },
+  setSearchFacet (state, facetId) {
+    state.eventData.search.facedId = facetId
+  },
+  setSearchStart (state, startDate) {
+    state.eventData.search.startDate = startDate
+  },
+  setSearchEnd (state, endDate) {
+    state.eventData.search.endDate = endDate
+  },
+  fetchEventsPending (state) {
+    state.eventData.events.loading = true
+  },
+  fetchEventsFailed (state) {
+    state.eventData.events.loading = false
+  },
+  fetchEventsSuccess (state, events) {
+    state.eventData.events.data = events
+    state.eventData.events.loading = false
+  },
+  setMobileSearchDrawerOpen (state, isOpen) {
+    state.ui.mobileSearchDrawer.open = isOpen
+  },
 }

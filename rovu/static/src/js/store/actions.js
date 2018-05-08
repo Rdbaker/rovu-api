@@ -1,3 +1,6 @@
+const qs = require('qs')
+const _ = require('lodash')
+
 const api = require('./api')
 const actionNames = require('./constants')
 
@@ -8,29 +11,31 @@ module.exports = {
     commit('fetchFacetsPending')
     api.fetchFacets()
       .catch(commit('fetchFacetsFailed'))
-      .then(res => {
-        res.json().then(data => commit('fetchFacetsSuccess', data))
-      })
+      .then(res => res.json().then(data => commit('fetchFacetsSuccess', data)))
   },
-  fetchFacetsFailed: ({ commit }) => {
+  setSearchFacet: ({ commit }, payload) => {
+    commit('setSearchFacet', payload)
   },
-  increment: ({ commit }) => commit(actionNames.INCREMENT),
-  decrement: ({ commit }) => commit(actionNames.DECREMENT),
-  incrementIfOdd ({ commit, state }) {
-    if ((state.count + 1) % 2 === 0) {
-      commit(actionNames.INCREMENT)
-    }
+  setSearchStart: ({ commit }, payload) => {
+    commit('setSearchStart', payload)
   },
-  incrementDecrement: ({ commit }) => {
-    commit(actionNames.INCREMENT)
-    commit(actionNames.DECREMENT)
+  setSearchEnd: ({ commit }, payload) => {
+    commit('setSearchEnd', payload)
   },
-  incrementAsync ({ commit }) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        commit(actionNames.INCREMENT)
-        resolve()
-      }, 1000)
-    })
-  }
+  fetchEvents: ({ commit, state }) => {
+    commit('fetchEventsPending')
+    api.fetchEvents(qs.stringify(_.pickBy({
+      event_start_after: _.get(state, 'eventData.search.startDate'),
+      event_end_before: _.get(state, 'eventData.search.endDate'),
+      category_id: _.get(state, 'eventData.search.facetId'),
+    }, _.identity)))
+      .catch((err) => commit('fetchEventsFailed', err))
+      .then(res => res.json().then(data => commit('fetchEventsSuccess', data)))
+  },
+  openMobileSearchDrawer: ({ commit }) => {
+    commit('setMobileSearchDrawerOpen', true)
+  },
+  closeMobileSearchDrawer: ({ commit }) => {
+    commit('setMobileSearchDrawerOpen', false)
+  },
 }

@@ -1,0 +1,36 @@
+.rovu-drawer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+}
+
+.rovu-drawer.rovu-drawer-active {
+  z-index: 2;
+  display: initial;
+}
+
+.rovu-drawer-content.rovu-drawer-content-active {
+  transition-duration: 0.25s;
+  transition-timing-function: ease-in;
+  transform: translateX(0);
+}
+
+.rovu-drawer-content {
+  height: 100%;
+  width: 60%;
+  background: white;
+  z-index: 1;
+  position: absolute;
+  transition-duration: 0.25s;
+  transition-timing-function: ease-out;
+  transform: translateX(-100%);
+}
+
+.rovu-drawer-mask {
+  width: 100%;
+  height: 100%;
+}

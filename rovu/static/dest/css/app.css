@@ -29104,6 +29104,3 @@ body.pushable > .pusher {
 /*******************************
          Site Overrides
 *******************************/
-@media screen and (max-width: 500px) {
-  .ui.top.attached.text.menu {
-    font-size: 2em; } }
