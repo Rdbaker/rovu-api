@@ -19,7 +19,7 @@ module.exports = {
     state.eventData.facets.loading = false
   },
   setSearchFacet (state, facetId) {
-    state.eventData.search.facedId = facetId
+    state.eventData.search.facetId = facetId
   },
   setSearchStart (state, startDate) {
     state.eventData.search.startDate = startDate
@@ -29,9 +29,11 @@ module.exports = {
   },
   fetchEventsPending (state) {
     state.eventData.events.loading = true
+    state.eventData.facets.loading = true
   },
   fetchEventsFailed (state) {
     state.eventData.events.loading = false
+    state.eventData.facets.loading = false
   },
   fetchEventsSuccess (state, events) {
     state.eventData.events.data = events

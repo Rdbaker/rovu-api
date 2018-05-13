@@ -27,7 +27,8 @@ module.exports = {
         src + 'sass/',
         './node_modules',
         './node_modules/bootstrap-sass/assets/stylesheets',
-        './node_modules/semantic-ui/dist'
+        './node_modules/semantic-ui/dist',
+        './node_modules/vue-datetime/dist'
       ]
     }
   },

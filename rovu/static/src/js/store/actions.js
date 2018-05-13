@@ -30,7 +30,10 @@ module.exports = {
       category_id: _.get(state, 'eventData.search.facetId'),
     }, _.identity)))
       .catch((err) => commit('fetchEventsFailed', err))
-      .then(res => res.json().then(data => commit('fetchEventsSuccess', data)))
+      .then(res => res.json().then(data => {
+        commit('fetchEventsSuccess', data.events)
+        commit('fetchFacetsSuccess', data.facets)
+      }))
   },
   openMobileSearchDrawer: ({ commit }) => {
     commit('setMobileSearchDrawerOpen', true)

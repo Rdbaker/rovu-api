@@ -27,10 +27,11 @@ import RovuNav from './nav/nav.vue'
 import RovuDrawer from './drawer/drawer.vue'
 import fontawesome from '@fortawesome/fontawesome'
 import faBars from '@fortawesome/fontawesome-free-solid/faBars'
+import faSearch from '@fortawesome/fontawesome-free-solid/faSearch'
 import { mapGetters, mapActions } from 'vuex'
 import store from './store'
 
-fontawesome.library.add(faBars)
+fontawesome.library.add(faBars, faSearch)
 
 export default {
   name: 'app',

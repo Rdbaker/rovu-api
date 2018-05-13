@@ -11,10 +11,13 @@
     "immutable": "^3.8.2",
     "jquery": "^3.2.1",
     "lodash": "^4.17.10",
+    "luxon": "^1.2.0",
     "semantic-ui": "^2.2.13",
     "vue": "^2.5.2",
+    "vue-datetime": "^1.0.0-beta.3",
     "vuejs-datepicker": "^1.1.4",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "weekstart": "^1.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
