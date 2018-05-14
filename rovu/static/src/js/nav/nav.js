@@ -39,7 +39,7 @@ export default {
       events: function() {
         this.markEvents(this.eventsData)
         return this.eventsData
-      }
+      },
     },
     mapGetters([
       'eventFacets',

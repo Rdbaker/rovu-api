@@ -1,7 +1,22 @@
 <div v-bind:class="{ ['rovu-drawer-active']: isActive }" class="rovu-drawer">
   <div class="rovu-drawer-content" v-bind:class="{ ['rovu-drawer-content-active']: isActive }">
-    <datepicker @selected="setStartDate"></datepicker>
+    <div class="search-datetime-picker">
+      <label>Show events starting after</label>
+      <datetime v-model="searchEventStartDate" type="datetime" input-class="field" :minute-step="15" use12-hour></datetime>
+    </div>
+
+    <div class="search-datetime-picker">
+      <label>Show events ending before</label>
+      <datetime v-model="searchEventEndDate" type="datetime12" input-class="field" :minute-step="15" use12-hour></datetime>
+    </div>
+
+    <button class="ui primary button event-search-button" :class="{ loading: fetchEventsPending }" v-on:click="fetchEvents">
+      <font-awesome-icon icon="search" />
+      Search
+    </button>
+
   </div>
+
   <div class="rovu-drawer-mask" v-on:click="closeMobileSearchDrawer">
   </div>
 </div>
