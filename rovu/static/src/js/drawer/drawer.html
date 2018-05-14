@@ -7,7 +7,7 @@
 
     <div class="search-datetime-picker">
       <label>Show events ending before</label>
-      <datetime v-model="searchEventEndDate" type="datetime12" input-class="field" :minute-step="15" use12-hour></datetime>
+      <datetime v-model="searchEventEndDate" type="datetime" input-class="field" :minute-step="15" use12-hour></datetime>
     </div>
 
     <button class="ui primary button event-search-button" :class="{ loading: fetchEventsPending }" v-on:click="fetchEvents">
