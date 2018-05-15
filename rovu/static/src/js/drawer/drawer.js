@@ -12,6 +12,13 @@ export default {
     Datetime,
   },
 
+  data: function() {
+    return {
+      searchEventStartDate: this.$store.getters.searchEventStart,
+      searchEventEndDate: this.$store.getters.searchEventEnd,
+    }
+  },
+
   watch: {
     searchEventStartDate: function(val) {
       this.setSearchStart(val);

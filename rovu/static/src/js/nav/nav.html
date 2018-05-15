@@ -5,11 +5,11 @@
   <div class="ui top attached text menu form" id="rovu-nav">
     <div class="search-datetime-picker">
       <label>Show events starting after</label>
-      <datetime v-model="searchEventStartDate" type="datetime12" input-class="field" :minute-step="15"></datetime>
+      <datetime v-model="searchEventStartDate" type="datetime" input-class="field" :minute-step="15" use12-hour></datetime>
     </div>
     <div class="search-datetime-picker">
       <label>Show events ending before</label>
-      <datetime v-model="searchEventEndDate" type="datetime12" input-class="field" :minute-step="15"></datetime>
+      <datetime v-model="searchEventEndDate" type="datetime" input-class="field" :minute-step="15" use12-hour></datetime>
     </div>
     <div class="ui dropdown item large-nav-item">
       Show events of type
