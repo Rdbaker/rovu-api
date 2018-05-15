@@ -33,6 +33,7 @@ module.exports = {
       .then(res => res.json().then(data => {
         commit('fetchEventsSuccess', data.events)
         commit('fetchFacetsSuccess', data.facets)
+        commit('setMobileSearchDrawerOpen', false)
       }))
   },
   openMobileSearchDrawer: ({ commit }) => {
